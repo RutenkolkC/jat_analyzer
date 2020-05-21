@@ -1,0 +1,87 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+repositories {
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+
+
+    mavenCentral()
+}
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:2.0.2'
+    }
+}
+dependencies {
+    compile 'org.apache.maven:maven-embedder:3.6.0'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.apache.maven', name: 'maven-compat', version: '3.6.0'
+    compile group: 'org.eclipse.aether', name: 'aether-connector-basic', version: '1.0.2.v20150114'
+    compile group: 'org.eclipse.aether', name: 'aether-transport-wagon', version: '1.0.2.v20150114'
+    compile group: 'org.apache.maven.wagon', name: 'wagon-http', version: '2.8'
+    compile group: 'org.apache.maven.wagon', name: 'wagon-provider-api', version: '2.8'
+    
+	compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.4.0.201906121030-r'
+    
+
+    compile "org.gradle:gradle-tooling-api:5.4.1"
+
+	compile group: 'org.takes', name: 'takes', version: '1.11.3'
+	compile group: 'javax.json', name: 'javax.json-api', version: '1.1.4'
+	compile group: 'org.glassfish', name: 'javax.json', version: '1.1.4'
+	
+	
+//    compile group: 'com.buschmais.jqassistant.neo4jserver', name: 'neo4jv3', version: '1.7.0-MS3'
+//    compile group: 'com.buschmais.jqassistant.core', name: 'store', version: '1.7.0-MS3'
+
+}
+//bs gradle hacks because gradle doesnt understand modules as normal devs do and does not repackage and make stuff transitively visible with modules.
+//gradle does not assume that modulepath has anything to do with how people use classpath and therefore there is no sane default behaviour
+//so we need this explicit piece of boilerplate nonsense
+//Why not make the 1% case where people really care about the modulepath the explicit version?
+//literally no one cares about classpath unless it blows up. Same for modulepath.
+/*
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        options.compilerArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls',
+            '--add-modules', 'javafx.fxml',
+            '--add-modules', 'javafx.web',
+            '--add-modules', 'javafx.graphics',
+            '--add-modules', 'javafx.media'
+        ]
+        classpath = files()
+    }
+}
+
+compileTestJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        options.compilerArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls',
+            '--add-modules', 'javafx.fxml',
+            '--add-modules', 'javafx.web',
+            '--add-modules', 'javafx.graphics',
+            '--add-modules', 'javafx.media',
+            '--add-modules', 'org.junit.jupiter.api',
+            '--add-reads', "$moduleName=org.junit.jupiter.api",
+            '--patch-module', "$moduleName=" + files(sourceSets.test.java.srcDirs).asPath,
+        ]
+        classpath = files()
+    }
+}*/
+
+
+group = "de.hhu.jat"
+version = "0.0.1"
+
+jar {
+    baseName "analyzer"
+}
+mainClassName = "de.hhu.jat.main.StartApp"
+

@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:2.0.2'
+    }
+}
+dependencies {
+    compile 'org.apache.maven:maven-embedder:3.6.0'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.apache.maven', name: 'maven-compat', version: '3.6.0'
+//    compile group: 'com.buschmais.jqassistant.neo4jserver', name: 'neo4jv3', version: '1.7.0-MS3'
+//    compile group: 'com.buschmais.jqassistant.core', name: 'store', version: '1.7.0-MS3'
+
+}
+
+mainClassName = "de.hhu.jat.main.StartApp"
+
