@@ -203,8 +203,11 @@ public class StartApp{
 				    										if(SHOULD_STOP) break outer;
 															scanAndStartServer(SERVER_SHUTDOWN_LATCH,serverReadyLatch,projectDirectory+"/"+buildDirRelativePath);
 				    									} else {
+															if(SHOULD_STOP) break outer;
+															String projectDirectory = buildProject(path,buildTask);
+															GIT_DIRECTORY = path;
 				    										if(SHOULD_STOP) break outer;
-															scanAndStartServer(SERVER_SHUTDOWN_LATCH,serverReadyLatch,path);
+															scanAndStartServer(SERVER_SHUTDOWN_LATCH,serverReadyLatch,projectDirectory+"/"+buildDirRelativePath);
 				    									}
 													}
 												} catch (Exception e) {
